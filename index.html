@@ -3,12 +3,67 @@
     <meta charset="utf-8">
     <title>Angular.js shopping</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.css">
+    <link rel="stylesheet" href="http://cdn.materialdesignicons.com/1.4.57/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="scripts/style.css">
     <script src= "https://code.angularjs.org/1.4.7/angular-route.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.js"></script>
     <script src= "app/app.js"></script>
     <script src= "app/controller/myController.js"></script>
   </head>
   <body ng-controller="myController">
-  {{1+2}}
-  <p>{{name}}</p>
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <p><strong>Shopping</strong></p>
+
+        <md-button>
+          <md-icon class="mdi mdi-plus-circle">
+            New
+          </md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>    
+
+    <md-content class="md-padding" layout="row" layout-wrap>
+      <md-card ng-repeat="item in items" flex="33">
+        <img ng-src="{{item.image}}" alt="">
+        <md-card-content>
+
+          <div class="classified-info" ng-show="!showContact">
+            <h2 class="md-title">{{item.title}}</h2>
+            <h3>{{item.posted | date}}</h3>
+            <h3>{{item.price | currency}}</h3>
+            <p>{{item.description}}</p>
+          </div>
+
+          <div class="classified-contact" ng-show="showContact">
+            <p><md-icon class="mdi mdi-account"></md-icon>{{item.contact.name}}</p>
+            <p><md-icon class="mdi mdi-phone"></md-icon>{{item.contact.phone}}</p>
+            <p><md-icon class="mdi mdi-email"></md-icon>{{item.contact.email}}</p>
+          </div>
+
+          <div layout="row">
+            <md-button ng-click="showContact = true" ng-show="!showContact">Contact</md-button>
+            <md-button ng-click="showContact = false" ng-show="showContact">Details</md-button>
+            <md-button ng-click="showAdmin = true" ng-show="!showAdmin">Admin</md-button>
+            <md-button ng-click="showAdmin = false" ng-show="showAdmin">Close</md-button>
+          </div>
+
+          <div class="classified-admin" ng-if="showAdmin">
+            <h3>Admin</h3>
+            <div layout="row">
+              <md-button class="md-primary">Edit</md-button>
+              <md-button class="md-warn">Delete</md-button>    
+            </div>
+          </div>
+        </md-card-content>
+      </md-card>
+    </md-content>
   </body>
 </html>
