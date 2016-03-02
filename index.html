@@ -2,37 +2,71 @@
   <head>
     <meta charset="utf-8">
     <title>Angular.js shopping</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.css">
-    <link rel="stylesheet" href="http://cdn.materialdesignicons.com/1.4.57/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="http://cdn.materialdesignicons.com/1.4.57/css/materialdesignicons.css">
     <link rel="stylesheet" href="scripts/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
     <script src= "https://code.angularjs.org/1.4.7/angular-route.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.js"></script>
-
-    <!-- Angular Material Library -->
     <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.js"></script>
     <script src= "app/app.js"></script>
     <script src= "app/controller/myController.js"></script>
+    <script src= "app/controller/classifieds.fac.js"></script>
   </head>
+
   <body ng-controller="myController">
 
     <md-toolbar>
       <div class="md-toolbar-tools">
         <p><strong>Shopping</strong></p>
 
-        <md-button>
+        <md-button ng-click="openSidebar()">
           <md-icon class="mdi mdi-plus-circle">
             New
           </md-icon>
         </md-button>
       </div>
-    </md-toolbar>    
+    </md-toolbar>  
+
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+      <md-toolbar>
+        <h1 class="md-toolbar-tools">Add a Classified</h1>
+      </md-toolbar>
+      <md-content layout-padding>
+
+      <form>
+        <md-input-container>
+          <label for="title">Title</label>
+          <input type="text" id="title" md-autofocus>
+        </md-input-container>
+        <md-input-container>
+          <label for="price">Price</label>
+          <input type="text" id="price" md-autofocus>
+        </md-input-container>
+        <md-input-container>
+          <label for="description">Description</label>
+          <input type="text" id="description" md-autofocus>
+        </md-input-container>
+        <md-input-container>
+          <label for="image">Image</label>
+          <input type="text" id="image" md-autofocus>
+        </md-input-container>
+        <md-button class="md-primary">
+          Save
+        </md-button>
+        <md-button class="md-primary">
+          Save Edit
+        </md-button>
+        <md-button ng-click="closeSidebar()" class="md-warn">
+          Cancel
+        </md-button>
+      </form>  
+    </md-sidenav>
 
     <md-content class="md-padding" layout="row" layout-wrap>
       <md-card ng-repeat="item in items" flex="33">
-        <img ng-src="{{item.image}}" alt="">
+        <img ng-src="{{item.image}}" alt="img-responsive">
         <md-card-content>
 
           <div class="classified-info" ng-show="!showContact">
