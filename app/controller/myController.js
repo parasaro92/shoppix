@@ -1,4 +1,4 @@
-myApp.controller('myController', function($scope, $http, classifiedsFactory, $mdSidenav, $mdToast){
+myApp.controller('myController', function($scope, $http, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog){
     
   classifiedsFactory.getClassifieds().then(function(items){
     $scope.items = items.data;
@@ -39,6 +39,20 @@ myApp.controller('myController', function($scope, $http, classifiedsFactory, $md
     $scope.item = {};
     $scope.closeSidebar();
     showToast("Edit saved!");
+  }
+
+  $scope.deleteItem = function(event, item) {
+    var confirm = $mdDialog.confirm()
+      .title('Are you sure you want to delete' + item.title + '?')
+      .ok('Yes')
+      .cancel('No')
+      .targetEvent(event);
+    $mdDialog.show(confirm).then(function(){
+      var index = $scope.items.indexOf(item);
+      $scope.items.splice(index, 1);      
+    }, function(){
+
+    });   
   }
 
   function showToast(message) {
