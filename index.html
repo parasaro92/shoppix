@@ -52,10 +52,10 @@
           <label for="image">Image</label>
           <input type="text" id="image" ng-model="item.image" md-autofocus>
         </md-input-container>
-        <md-button ng-click="saveItem(item)" class="md-primary">
+        <md-button ng-if="!editing" ng-click="saveItem(item)" class="md-primary">
           Save
         </md-button>
-        <md-button class="md-primary">
+        <md-button ng-click="saveEdit()" ng-if="editing" class="md-primary">
           Save Edit
         </md-button>
         <md-button ng-click="closeSidebar()" class="md-warn">
@@ -94,7 +94,7 @@
           <div class="classified-admin" ng-if="showAdmin">
             <h3>Admin</h3>
             <div layout="row">
-              <md-button class="md-primary">Edit</md-button>
+              <md-button ng-click="editItem(item)" class="md-primary">Edit</md-button>
               <md-button class="md-warn">Delete</md-button>    
             </div>
           </div>

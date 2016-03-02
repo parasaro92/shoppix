@@ -23,14 +23,31 @@ myApp.controller('myController', function($scope, $http, classifiedsFactory, $md
       item.contact = contact;
       $scope.items.push(item);
       $scope.item = {};
-      $scope.closeSidebar();
-      $mdToast.show(
+      $scope.closeSidebar();   
+      showToast("Item saved!");
+    }
+  }
+
+  $scope.editItem = function(item){
+    $scope.editing = true;
+    $scope.openSidebar();
+    $scope.item = item;
+  }
+
+  $scope.saveEdit = function() {
+    $scope.editing = false;
+    $scope.item = {};
+    $scope.closeSidebar();
+    showToast("Edit saved!");
+  }
+
+  function showToast(message) {
+    $mdToast.show(
         $mdToast.simple()
-          .content("Item Saved!")
+          .content(message)
           .position('top, right')
           .hideDelay(3000)
-      );    
-    }
+      ); 
   }
 
 }); 
