@@ -1,8 +1,22 @@
 myApp.controller('myController', function($scope, $http, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog){
-    
+   
+  var vm = this;
+  
+  vm.categories;
+  vm.item;
+  vm.items;
+  vm.closeSidebar = closeSidebar;  
+  vm.deleteItem = deleteItem;
+  vm.editing;
+  vm.editItem = editItem;
+  vm.openSidebar = openSidebar;
+  vm.saveItem = saveItem;
+  // vm.saveEdit = saveEdit;
+
+
   classifiedsFactory.getClassifieds().then(function(items){
-    $scope.items = items.data;
-    $scope.categories = getCategories($scope.items);
+    vm.items = items.data;
+    vm.categories = getCategories(vm.items);
     // console.log($scope.items);
   });
 
@@ -11,46 +25,46 @@ myApp.controller('myController', function($scope, $http, classifiedsFactory, $md
     phone: "555-555-444"
   }
 
-  $scope.openSidebar = function() {
+  function openSidebar() {
     $mdSidenav('left').open();
   }
 
-  $scope.closeSidebar = function() {
+  function closeSidebar() {
     $mdSidenav('left').close();
   }
 
-  $scope.saveItem = function(item) {
+  function saveItem() {
     if(item) {
       item.contact = contact;
-      $scope.items.push(item);
-      $scope.item = {};
-      $scope.closeSidebar();   
+      vm.items.push(item);
+      vm.item = {};
+      closeSidebar();   
       showToast("Item saved!");
     }
   }
 
-  $scope.editItem = function(item){
-    $scope.editing = true;
-    $scope.openSidebar();
-    $scope.item = item;
+  function editItem(item){
+    vm.editing = true;
+    openSidebar();
+    vm.item = item;
   }
 
-  $scope.saveEdit = function() {
-    $scope.editing = false;
-    $scope.item = {};
-    $scope.closeSidebar();
+  function saveEdit() {
+    vm.editing = false;
+    vm.item = {};
+    closeSidebar();
     showToast("Edit saved!");
   }
 
-  $scope.deleteItem = function(event, item) {
+  function deleteItem(event, item) {
     var confirm = $mdDialog.confirm()
       .title('Are you sure you want to delete' + item.title + '?')
       .ok('Yes')
       .cancel('No')
       .targetEvent(event);
     $mdDialog.show(confirm).then(function(){
-      var index = $scope.items.indexOf(item);
-      $scope.items.splice(index, 1);      
+      var index = vm.items.indexOf(item);
+      vm.items.splice(index, 1);      
     }, function(){
 
     });   
