@@ -11,5 +11,20 @@ var myApp = angular
       url: '/classifieds',
       templateUrl: 'app/classifieds/classifieds.tpl.html',
       controller: 'myController as vm'
+    })
+    
+    .state('classifieds.new', {
+      url: '/new',
+      templateUrl: 'app/classifieds/new/classifieds.new.tpl.html',
+      controller: 'newClassifiedsCtrl as vm'
+    })
+
+    .state('classifieds.edit', {
+      url: '/edit/:id',
+      templateUrl: 'app/classifieds/edit/classifieds.edit.tpl.html',
+      controller: 'editClassifiedsCtrl as vm',
+      params: {
+        item: null
+      }
     });
 });

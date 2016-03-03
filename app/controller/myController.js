@@ -1,4 +1,4 @@
-myApp.controller('myController', function($scope, $http, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog){
+myApp.controller('myController', function($scope, $state, $http, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog){
    
   var vm = this;
   
@@ -13,11 +13,16 @@ myApp.controller('myController', function($scope, $http, classifiedsFactory, $md
   vm.saveItem = saveItem;
   // vm.saveEdit = saveEdit;
 
-
   classifiedsFactory.getClassifieds().then(function(items){
     vm.items = items.data;
     vm.categories = getCategories(vm.items);
     // console.log($scope.items);
+  });
+
+  $scope.$on('newItem', function(event, item){
+    item.id = vm.items.length + 1;
+    vm.items.push(item);
+    showToast('Item saved!');
   });
 
   var contact = {
@@ -26,7 +31,7 @@ myApp.controller('myController', function($scope, $http, classifiedsFactory, $md
   }
 
   function openSidebar() {
-    $mdSidenav('left').open();
+    $state.go('classifieds.new');
   }
 
   function closeSidebar() {
@@ -44,9 +49,10 @@ myApp.controller('myController', function($scope, $http, classifiedsFactory, $md
   }
 
   function editItem(item){
-    vm.editing = true;
-    openSidebar();
-    vm.item = item;
+    $state.go('classifieds.edit', {
+      id: item.id,
+      item: item
+    });
   }
 
   function saveEdit() {
