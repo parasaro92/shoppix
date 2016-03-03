@@ -2,6 +2,7 @@ myApp.controller('myController', function($scope, $http, classifiedsFactory, $md
     
   classifiedsFactory.getClassifieds().then(function(items){
     $scope.items = items.data;
+    $scope.categories = getCategories($scope.items);
     // console.log($scope.items);
   });
 
@@ -62,6 +63,18 @@ myApp.controller('myController', function($scope, $http, classifiedsFactory, $md
           .position('top, right')
           .hideDelay(3000)
       ); 
+  }
+
+  function getCategories(items) {
+    var categories = [];
+
+    angular.forEach(items, function(item){
+      angular.forEach(item.categories, function(category){
+        categories.push(category);
+      });
+    }); 
+
+  return _.uniq(categories);
   }
 
 }); 

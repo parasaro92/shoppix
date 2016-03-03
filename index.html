@@ -13,6 +13,7 @@
     <script src= "app/app.js"></script>
     <script src= "app/controller/myController.js"></script>
     <script src= "app/controller/classifieds.fac.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.js"></script>
   </head>
 
   <body ng-controller="myController">
@@ -26,8 +27,38 @@
             New
           </md-icon>
         </md-button>
+
+        <md-button ng-click="showFilters = true">
+          <md-icon class="mdi mdi-magnify"></md-icon>
+          Filters
+        </md-button>
+
       </div>
     </md-toolbar>  
+
+    <div class="filters" layout="row" layout-align="center center" ng-show="showFilters">
+      
+      <md-input-container class style="margin-top: 43px;">
+        <label>Enter Search Term</label>
+        <input type="text" ng-model="itemsFilter">
+      </md-input-container>
+
+      <md-input-container>
+        <label>Category</label>
+        <md-select ng-model="category">
+          <md-option ng-repeat="category in categories" value="{{ category }}">
+            {{ category }}
+          </md-option>
+        </md-select>
+      </md-input-container>
+
+      <div layout="row">
+        <md-button
+            class="md-warn"
+            ng-click="itemsFilter = ''; category = ''">Clear
+        </md-button> 
+      </div>
+    </div>
 
     <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
       <md-toolbar>
@@ -67,7 +98,7 @@
     </md-sidenav>
 
     <md-content class="md-padding" layout="row" layout-wrap>
-      <md-card ng-repeat="item in items" flex="33">
+      <md-card ng-repeat="item in items | filter: itemsFilter | filter: category" flex="30" class="item">
         <img ng-src="{{item.image}}" alt="img-responsive">
         <md-card-content>
 
