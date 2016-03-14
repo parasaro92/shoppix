@@ -11,9 +11,11 @@ myApp.directive("classifiedCard", function(){
     controllerAs: "vm" 
   }
 
-  function classifiedCardController($state, $scope, $mdDialog) {
+  function classifiedCardController($state, $scope, $mdDialog, $mdToast, classifiedsFactory) {
 
     var vm = this;
+    vm.items;
+    vm.items = classifiedsFactory.ref; 
     vm.editItem = editItem;
     vm.deleteItem = deleteItem;
 
@@ -30,7 +32,7 @@ myApp.directive("classifiedCard", function(){
         .cancel('No')
         .targetEvent(event);
       $mdDialog.show(confirm).then(function(){
-        vm.items.$remove(vm.item);
+        vm.items.$remove(item);
         showToast('Item deleted');     
       }, function(){
 
