@@ -13,16 +13,23 @@ myApp.controller('myController', function($scope, $state, $http, classifiedsFact
   vm.saveItem = saveItem;
   // vm.saveEdit = saveEdit;
 
-  classifiedsFactory.getClassifieds().then(function(items){
-    vm.items = items.data;
-    vm.categories = getCategories(vm.items);
-    // console.log($scope.items);
+  vm.items = classifiedsFactory.ref; 
+  vm.items.$loaded().then(function(items){
+    vm.categories = getCategories(items);
   });
+  // classifiedsFactory.getClassifieds().then(function(items){
+  //   vm.items = items.data;
+  //   vm.categories = getCategories(vm.items);
+  //   // console.log($scope.items);
+  // });
 
   $scope.$on('newItem', function(event, item){
-    item.id = vm.items.length + 1;
-    vm.items.push(item);
+    vm.items.$add(item);
     showToast('Item saved!');
+  });
+
+  $scope.$on('editSaved', function(event, message){
+    showToast(message);
   });
 
   var contact = {
@@ -38,7 +45,7 @@ myApp.controller('myController', function($scope, $state, $http, classifiedsFact
     $mdSidenav('left').close();
   }
 
-  function saveItem() {
+  function saveItem(item) {
     if(item) {
       item.contact = contact;
       vm.items.push(item);
@@ -50,8 +57,7 @@ myApp.controller('myController', function($scope, $state, $http, classifiedsFact
 
   function editItem(item){
     $state.go('classifieds.edit', {
-      id: item.id,
-      item: item
+      id: item.$id
     });
   }
 
@@ -69,8 +75,8 @@ myApp.controller('myController', function($scope, $state, $http, classifiedsFact
       .cancel('No')
       .targetEvent(event);
     $mdDialog.show(confirm).then(function(){
-      var index = vm.items.indexOf(item);
-      vm.items.splice(index, 1);      
+      vm.items.$remove(item);
+      showToast('Item deleted');     
     }, function(){
 
     });   
@@ -82,7 +88,7 @@ myApp.controller('myController', function($scope, $state, $http, classifiedsFact
           .content(message)
           .position('top, right')
           .hideDelay(3000)
-      ); 
+    ); 
   }
 
   function getCategories(items) {
@@ -97,4 +103,5 @@ myApp.controller('myController', function($scope, $state, $http, classifiedsFact
   return _.uniq(categories);
   }
 
+  
 }); 

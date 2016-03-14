@@ -15,16 +15,14 @@
       </md-input-container>
       <md-input-container>
         <label for="description">Description</label>
-        <input type="text" id="description" ng-model="vm.item.description" md-autofocus>
+        <textarea type="text" id="description" ng-model="vm.item.description" md-autofocus>
+        </textarea>  
       </md-input-container>
       <md-input-container>
         <label for="image">Image</label>
-        <input type="text" id="image" ng-model="vm.item.image" md-autofocus>
+        <input type="text" id="image" ng-model="vm.item.image">
       </md-input-container>
-      <md-button ng-if="!editing" ng-click="vm.saveItem(item)" class="md-primary">
-        Save
-      </md-button>
-      <md-button ng-click="vm.saveEdit()" ng-if="editing" class="md-primary">
+      <md-button ng-click="vm.saveEdit()" class="md-primary">
         Save Edit
       </md-button>
       <md-button ng-click="vm.closeSidebar()" class="md-warn">

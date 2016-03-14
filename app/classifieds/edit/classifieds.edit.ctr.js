@@ -1,9 +1,10 @@
 myApp.controller('editClassifiedsCtrl', function($scope, $state, $mdSidenav, $timeout, $mdDialog, classifiedsFactory){
 
   var vm = this;
+  vm.items = classifiedsFactory.ref; 
   vm.closeSidebar = closeSidebar;
-  vm.saveItem = saveItem;
-  vm.item = $state.params.item;
+  vm.saveEdit = saveEdit;
+  vm.item = vm.items.$getRecord($state.params.id); // getting the id of item from firebase
 
   $timeout(function(){
     $mdSidenav('left').open();
@@ -23,17 +24,10 @@ myApp.controller('editClassifiedsCtrl', function($scope, $state, $mdSidenav, $ti
     vm.sidenavOpen = false;
   }
 
-  function saveItem(item){
-    if(item){
-
-      item.contact = {
-        name: "John",
-        phone: "123-456-789",
-        email: "john5@gmail.com"
-      }
-
-      $scope.$emit('newItem', item);
-      vm.sidenavOpen = false;
-    }
+  function saveEdit() {
+    vm.items.$save(vm.item).then(function(){
+    $scope.$emit('editSaved', 'Edit saved!');
+    vm.sidenavOpen = false;
+    });
   }
 });

@@ -10,70 +10,44 @@
 
     <md-button ng-click="showFilters = true">
       <md-icon class="mdi mdi-magnify"></md-icon>
-        Filters
+      Filters
     </md-button>
-
   </div>
-  </md-toolbar> 
+</md-toolbar> 
 
-  <div class="filters" layout="row" layout-align="center center" ng-show="showFilters">
+<div class="filters" layout="row" layout-align="center center" ng-show="showFilters">
 
-    <md-input-container class style="margin-top: 43px;">
+  <md-input-container class style="margin-top: 43px;">
     <label>Enter Search Term</label>
     <input type="text" ng-model="itemsFilter">
   </md-input-container>
 
   <md-input-container>
   <label>Category</label>
-  <md-select ng-model="category">
-  <md-option ng-repeat="category in vm.categories" value="{{ category }}">
+  <md-select ng-model= "category">
+  <md-option ng-repeat= "category in vm.categories" value="{{ category }}">
   {{ category }}
   </md-option>
   </md-select>
   </md-input-container>
 
-  <div layout="row">
+  <div layout= "row">
     <md-button
-    class="md-warn"
-    ng-click="itemsFilter = ''; category = ''">Clear
-  </md-button> 
+      class= "md-warn"
+      ng-click="itemsFilter = ''; category = ''">Clear
+    </md-button> 
   </div>
-  </div>
+</div>
 
-  <ui-view></ui-view>
+<ui-view></ui-view>
 
-  <md-content class="md-padding" layout="row" layout-wrap>
-  <md-card ng-repeat="item in vm.items | filter: itemsFilter | filter: category" flex="30" class="item">
-  <img ng-src="{{item.image}}" alt="img-responsive">
-  <md-card-content>
-
-  <div class="classified-info" ng-show="!showContact">
-    <h2 class="md-title">{{item.title}}</h2>
-    <h3>{{item.posted | date}}</h3>
-    <h3>{{item.price | currency}}</h3>
-    <p>{{item.description}}</p>
-  </div>
-
-  <div class="classified-contact" ng-show="showContact">
-    <p><md-icon class="mdi mdi-account"></md-icon>{{item.contact.name}}</p>
-    <p><md-icon class="mdi mdi-phone"></md-icon>{{item.contact.phone}}</p>
-    <p><md-icon class="mdi mdi-email"></md-icon>{{item.contact.email}}</p>
-  </div>
-
-  <div layout="row">
-    <md-button ng-click="showContact = true" ng-show="!showContact">Contact</md-button>
-    <md-button ng-click="showContact = false" ng-show="showContact">Details</md-button>
-    <md-button ng-click="showAdmin = true" ng-show="!showAdmin">Admin</md-button>
-    <md-button ng-click="showAdmin = false" ng-show="showAdmin">Close</md-button>
-  </div>
-
-  <div class="classified-admin" ng-if="showAdmin">
-    <h3>Admin</h3>
-    <div layout="row">
-      <md-button ng-click="vm.editItem(item)" class="md-primary">Edit</md-button>
-      <md-button ng-click="vm.deleteItem($event, item)" class="md-warn">Delete</md-button>    
-    </div>
-  </div>
-  </md-card-content>
-  </md-card>
-  </md-content>
+<md-content>
+  <classified-card  
+    items = "vm.items", 
+    items-filter= "itemsFilter", 
+    category= "category" 
+    class= "md-padding" 
+    layout= "row" 
+    layout-wrap>
+  </classified-card>  
+</md-content>

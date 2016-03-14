@@ -1,9 +1,9 @@
 var myApp = angular
-  .module('myApp', ['ngMaterial', 'ui.router'])
+  .module('myApp', ['ngMaterial', 'ui.router', 'firebase'])
   .config(function($mdThemingProvider, $stateProvider){
 
   $mdThemingProvider.theme('default')
-    .primaryPalette('teal')
+    .primaryPalette('blue')
     .accentPalette('orange');
 
   $stateProvider

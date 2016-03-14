@@ -1,12 +1,10 @@
 
 
-  myApp.factory("classifiedsFactory", function($http){
+  myApp.factory("classifiedsFactory", function($http, $firebaseArray){
 
-    function getClassifieds() {
-      return $http.get('data/classifieds.json');
-    }
+    var ref = new Firebase('https://shoppix.firebaseio.com/');
 
     return {
-      getClassifieds: getClassifieds
+      ref: $firebaseArray(ref)
     }
   });
